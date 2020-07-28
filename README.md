@@ -2,10 +2,10 @@ scRNAseq\_NatComm2020
 ================
 Chris Scharer and Tian Mi
 
-### Repository Info
+# Repository Info
 
-Rscripts used for processing scRNA-seq data and making figures
-associated with the following publication:
+Rscripts used for processing scRNA-seq and bulk RNA-seq data and making
+figures associated with the following publication:
 
 Scharer & Patterson et al. Antibody-secreting cell destiny emerges
 during the initial stages of B cell activation. Nature Communications
@@ -13,7 +13,7 @@ during the initial stages of B cell activation. Nature Communications
 
 Citation:
 
-### Scripts
+# single cel RNA-seq Scripts
 
   - scRNAseq.R: Main scRNAseq analysis pipeline based on Monocle2.
     Inlcude importing matrix from 10X CellRanger output, QC of cell
@@ -54,3 +54,45 @@ Citation:
   - SCENIC 1.1.1-10
   - Biobase 2.38.0
   - AUCell 1.7.1
+
+# bulk RNA-seq Scripts
+
+  - RNAseq.sample.manifest.txt: key file for all samples and contains
+    metadata for each
+
+  - RNAseq.pipeline.R: script for initial data organization, fastq
+    qc/trimming, mapping, duplicate
+marking
+
+## coverage scripts extract gene coverage, ercc coverage, and normalize the data
+
+  - geneCounts.exon.PE.R: extracts coverage for all Entrez gene exons
+    and normalizes data
+
+  - ERCC\_coverage.R: extracts coverage for the ERCC spike in controls
+
+  - geneTsNorm.updated.R: normalizes FPKM data to mRNAs/cells based on
+    ERCC coverage
+
+## Differential analysis, PCA, and plotting scripts
+
+  - diff.glm\_v3.R: pairwise differential analysis with edgeR
+
+  - basicPlots.R: function for making barplots
+
+  - makeBarPlots.R: driver script for making barplots and grouping
+
+  - makeMPCBarPlots.R: driver script to plot the total mRNAs for each
+    sample from “Mouse.total.mpc.txt” file.
+
+  - Mouse.total.mpc.txt: companion file to above script
+
+  - pca.confidenceCircles.R: plot PCA using differentia
+
+## Common functions written for many data analysis routines
+
+  - bisTools.R: common functions used for processing files
+
+### Software Versions
+
+  - R 3.4.0
