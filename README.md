@@ -13,7 +13,7 @@ during the initial stages of B cell activation. Nature Communications
 
 Citation:
 
-# single cel RNA-seq Scripts
+# single cell RNA-seq Scripts
 
   - scRNAseq.R: Main scRNAseq analysis pipeline based on Monocle2.
     Inlcude importing matrix from 10X CellRanger output, QC of cell
@@ -38,6 +38,8 @@ Citation:
   - running\_scenic.R: Scripts to run SCENIC on scRNA data, including
     functions to plot heat maps and perform differential tests between
     score results for various clusters identified in Monocle2.
+
+  - plot.GSEA.pathway.R: script to replot the GSEA output for figures.
 
 ### Software Versions
 
@@ -95,4 +97,12 @@ marking
 
 ### Software Versions
 
-  - R 3.4.0
+  - R 3.5.2
+  - skewer version: 0.2.2
+  - FastQC v0.11.4
+  - Tophat v2.0.13
+  - samtools 1.9
+  - PICARD v1.127
+  - GenomicRanges v1.34
+  - edgeR v3.24.3
+  - vegan v2.5.5

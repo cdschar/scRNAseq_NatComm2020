@@ -52,8 +52,7 @@ dev.off()
 #export = "Filename.txt" #put a file name if you want to save the data for other analyses
 #lwd controls the line width
 
-p = plot_genes_time(my_cds_subset, genes = as.vector(batf$gene), max_norm=TRUE, lwd=0.5, export = "Filename.txt")
-#p = plot_genes_time(my_cds_subset, genes = c("Irf4", "Irf8"), max_norm=TRUE, lwd=0.5)
+p = plot_genes_time(my_cds_subset, genes = c("Irf4", "Irf8"), max_norm=TRUE, lwd=0.5)
 cairo_pdf(paste0("Irf4.Irf8.norm.pseudotime.pdf"), width=4, height=4)
 print(p)
 dev.off()
@@ -102,13 +101,11 @@ dev.off()
 #plot tSNE using gene signature or collection of genes
 ######
 
-#batf = read.table("/Volumes/GRAID2/scRNAseq_IRF4/SCENIC/Batf/BATF.targets.info.txt", header = T, sep = "\t")
-
-#colors = c("#ffffe5", "#fff7bc", "#fee391", "#fec44f", "#993404", "#662506") #orange/brown
 colors = c("#ffffcc", "#ffeda0", "#ffeda0", "#fed976", "#feb24c", "#fc4e2a", "#bd0026", "#800026") #white, pink, red
 
-scenic = read.table("/Volumes/GRAID2/scRNAseq_IRF4/SCENIC/SCENIC_run/output/Step2_regulonTargetsInfo.tsv", header = T, sep = "\t")
+scenic = read.table("/SCENIC_run/output/Step2_regulonTargetsInfo.tsv", header = T, sep = "\t")
 tf = "Batf"
+
 #filter for tf
 filter = scenic[which(scenic$TF == tf), ]
 
@@ -119,10 +116,37 @@ range((score$mean)^3) #scaling factor
 
 p = plot_cell_clusters(my_cds_subset, color_by=(score$mean)^3, breaks = c(0, 100),  colors = colors)
 
-cairo_pdf(paste0("/Volumes/GRAID2/scRNAseq_IRF4/SCENIC/", tf, ".IRF4ko.score.scaled.red.pdf"), width=5, height=6)
+cairo_pdf(paste0("/SCENIC/", tf, ".IRF4ko.score.scaled.red.pdf"), width=5, height=6)
 print(p)
 dev.off()
 
+#####
+#plot GSEA gene set signature on tsne
+#####
+
+#load GSEA file
+GSEAdir = "/GSEA/Comp_3_8_GO.GseaPreranked.1528299980839/"
+GSEAfile = "GO_ER_NUCLEUS_SIGNALING_PATHWAY.xls"
+set = read.table(file = paste0(GSEAdir, GSEAfile), header = T, sep = "\t")
+
+#filter for core enriched genes
+set.core = set[set$CORE.ENRICHMENT == "Yes", ]
+
+#tranform magic column headers to all caps
+magic = magic_wt
+colnames(magic) = toupper(colnames(magic))
+
+#filter for GSEA genes
+score = magic[, colnames(magic) %in% set.core$PROBE]
+score$mean = rowMeans(score)
+range(score$mean^3)
+
+#plot
+p = plot_cell_clusters(my_cds_subset, color_by=score$mean^3, breaks = c(0,150),  colors = colors)
+
+cairo_pdf(paste0(gsub(".xls", "", GSEAfile), ".score.scaled.red.core.pdf"), width=5, height=6)
+print(p)
+dev.off()
 
 ######
 #adjust cluster names to be in a user defined order
