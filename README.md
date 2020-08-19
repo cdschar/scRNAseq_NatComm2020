@@ -11,7 +11,7 @@ Scharer & Patterson et al. Antibody-secreting cell destiny emerges
 during the initial stages of B cell activation. Nature Communications
 2020
 
-Citation:
+<https://www.nature.com/articles/s41467-020-17798-x>
 
 # single cell RNA-seq Scripts
 
